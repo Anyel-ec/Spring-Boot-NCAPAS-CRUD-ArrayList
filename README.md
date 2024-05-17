@@ -13,8 +13,12 @@ NCAPAS is a Spring Boot application designed to manage CRUD operations (Create, 
 ### Create a new person
 ![Alt text](doc/save.PNG) 
 ### Read all persons
+![Alt text](doc/findAll.PNG)
+### Read by identification
+![Alt text](doc/findBy.PNG)
+### Update by identification
 ![Alt text](doc/update.PNG) 
-### Swagger UI Documentation
+### Delete by identification
 ![Alt text](doc/delete.PNG) 
 
 
