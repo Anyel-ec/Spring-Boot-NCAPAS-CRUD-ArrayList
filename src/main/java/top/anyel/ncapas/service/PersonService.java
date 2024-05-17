@@ -21,4 +21,20 @@ public class PersonService {
         return personRepository.findAll();
     }
 
+    public Person findById(String identification){
+        return personRepository.findById(identification);
+    }
+
+    public Person updateById(String identification, Person person){
+        return personRepository.updateById(identification, person);
+    }
+
+    public String deleteById(String identification){
+        return personRepository.deleteById(identification);
+    }
+
+
+
+
+
 }

@@ -19,4 +19,33 @@ public class PersonRepository {
     public List<Person> findAll(){
         return persons;
     }
+
+    public Person findById(String identification){
+        for (Person person : persons) {
+            if (person.identification().equals(identification)) {
+                return person;
+            }
+        }
+        return null;
+    }
+
+    public Person updateById(String identification, Person person){
+        for (int i = 0; i < persons.size(); i++) {
+            if (persons.get(i).identification().equals(identification)) {
+                persons.set(i, person);
+                return person;
+            }
+        }
+        return null;
+    }
+
+    public String deleteById(String identification){
+        for (int i = 0; i < persons.size(); i++) {
+            if (persons.get(i).identification().equals(identification)) {
+                persons.remove(i);
+                return "Person with identification " + identification + " was deleted";
+            }
+        }
+        return "Person with identification " + identification + " was not found";
+    }
 }

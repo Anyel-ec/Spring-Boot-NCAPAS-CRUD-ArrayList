@@ -19,6 +19,7 @@ public class PersonController {
         return "In /persons/v1/swagger-ui.html you can see the documentation of the API";
     }
 
+    @PostMapping("/save")
     public Person save(@RequestBody Person person) {
         return personService.save(PersonUpperCaseService.toUpperCase(person));
     }
@@ -26,6 +27,21 @@ public class PersonController {
     @GetMapping("/findAll")
     public List<Person> findAll(){
         return personService.findAll();
+    }
+
+    @GetMapping("/findById/{identification}")
+    public Person findById(@PathVariable String identification){
+        return personService.findById(identification);
+    }
+
+    @PutMapping("/updateById/{identification}")
+    public Person updateById(@PathVariable String identification, @RequestBody Person person){
+        return personService.updateById(identification, PersonUpperCaseService.toUpperCase(person));
+    }
+
+    @DeleteMapping("/deleteById/{identification}")
+    public String deleteById(@PathVariable String identification){
+        return personService.deleteById(identification);
     }
 
 
