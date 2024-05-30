@@ -1,5 +1,4 @@
 <configuration>
-
     <!-- Definir el archivo donde se guardarán los logs -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>logs/application.log</file>
@@ -14,17 +13,18 @@
         </encoder>
     </appender>
 
-    <!-- Consola -->
+    <!-- Definir la salida de los logs en la consola -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>
+                %highlight(%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n)
+            </pattern>
+            <conversiónRule conversionWord="highlight" converterClass="ch.qos.logback.classic.pattern.color.HighlightingCompositeConverter" />
         </encoder>
     </appender>
 
-    <!-- Nivel de log a INFO (puedes cambiarlo a DEBUG, WARN, ERROR) -->
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="CONSOLE" />
         <appender-ref ref="FILE" />
     </root>
-
 </configuration>

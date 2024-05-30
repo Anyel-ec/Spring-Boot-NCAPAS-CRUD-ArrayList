@@ -1,7 +1,7 @@
 package top.anyel.ncapas.service;
 
 import top.anyel.ncapas.model.Person;
-import top.anyel.ncapas.utils.UpperCaseImpl;
+import top.anyel.ncapas.utils.uppercase.UpperCaseImpl;
 
 public class PersonUpperCaseService {
 
