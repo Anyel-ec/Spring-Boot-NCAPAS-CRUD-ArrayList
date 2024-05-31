@@ -23,7 +23,7 @@
         </encoder>
     </appender>
 
-    <root level="DEBUG">
+    <root level="war">
         <appender-ref ref="CONSOLE" />
         <appender-ref ref="FILE" />
     </root>

@@ -2,6 +2,7 @@ package top.anyel.ncapas.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import top.anyel.ncapas.model.Address;
 import top.anyel.ncapas.model.Person;
 import top.anyel.ncapas.repository.PersonRepository;
 
@@ -33,6 +34,10 @@ public class PersonService {
         return personRepository.deleteById(identification);
     }
 
+
+    public List<Address> findHouseAddressesById(String identification) {
+        return personRepository.findHouseAddressesById(identification);
+    }
 
 
 

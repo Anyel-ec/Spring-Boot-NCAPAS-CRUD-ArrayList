@@ -1,10 +1,15 @@
 package top.anyel.ncapas.repository;
 
 import org.springframework.stereotype.Repository;
+import top.anyel.ncapas.model.Address;
 import top.anyel.ncapas.model.Person;
+import top.anyel.ncapas.model.enums.AddressType;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Repository
 public class PersonRepository {
@@ -47,5 +52,17 @@ public class PersonRepository {
             }
         }
         return "Person with identification " + identification + " was not found";
+    }
+
+
+    public List<Address> findHouseAddressesById(String identification) {
+        Person person = findById(identification);
+        if (person != null) {
+            return person.address().stream()
+                    .filter(address -> address.addressType().equals(AddressType.HOUSE))
+                    .collect(Collectors.toList());
+        }
+        return Collections.emptyList();
+
     }
 }
