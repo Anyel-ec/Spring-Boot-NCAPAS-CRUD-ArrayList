@@ -1,7 +1,7 @@
 package top.anyel.ncapas.service.uppercase;
 
 import top.anyel.ncapas.model.Address;
-import top.anyel.ncapas.utils.uppercase.UpperCaseImpl;
+import top.anyel.ncapas.shared.utils.uppercase.UpperCaseImpl;
 
 import java.util.List;
 import java.util.stream.Collectors;

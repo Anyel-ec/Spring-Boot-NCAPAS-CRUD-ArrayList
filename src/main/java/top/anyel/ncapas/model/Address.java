@@ -11,5 +11,4 @@ public record Address(
         AddressType addressType)
 {
 
-    
 }

@@ -1,4 +1,4 @@
-package top.anyel.ncapas.utils.uppercase;
+package top.anyel.ncapas.shared.utils.uppercase;
 
 public interface UpperCase {
     String upperCase(String texto);

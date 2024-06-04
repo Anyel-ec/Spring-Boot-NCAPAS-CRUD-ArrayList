@@ -1,4 +1,4 @@
-package top.anyel.ncapas.utils.logger;
+package top.anyel.ncapas.shared.utils.logger;
 
 
 import org.springframework.stereotype.Component;

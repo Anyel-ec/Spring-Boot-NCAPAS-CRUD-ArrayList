@@ -1,6 +1,4 @@
-package top.anyel.ncapas.utils.uppercase;
-
-import top.anyel.ncapas.utils.uppercase.UpperCase;
+package top.anyel.ncapas.shared.utils.uppercase;
 
 public class UpperCaseImpl implements UpperCase {
     public String upperCase(String texto){
