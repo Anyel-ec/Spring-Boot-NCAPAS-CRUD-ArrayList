@@ -1,8 +1,5 @@
 package top.anyel.ncapas.model;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import top.anyel.ncapas.shared.utils.exceptions.Guards;
 
 import java.util.List;
@@ -19,7 +16,6 @@ public record Person(
                 Guards.notNull(lastName, "El apellido no puede ser nulo");
                 Guards.notBlank(identification, "La identificación no puede estar vacía");
                 Guards.size(identification, 10, "La identificación debe tener 10 caracteres");
-
         }
 
 }

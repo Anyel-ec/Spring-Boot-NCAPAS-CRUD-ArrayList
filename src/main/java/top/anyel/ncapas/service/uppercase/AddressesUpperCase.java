@@ -6,7 +6,7 @@ import top.anyel.ncapas.shared.utils.uppercase.UpperCaseImpl;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AddressesUpperCaseService {
+public class AddressesUpperCase {
 
     private static final UpperCaseImpl helper = new UpperCaseImpl();
 

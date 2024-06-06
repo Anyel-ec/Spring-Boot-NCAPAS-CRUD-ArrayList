@@ -4,21 +4,17 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import top.anyel.ncapas.model.Address;
 import top.anyel.ncapas.model.Person;
 import top.anyel.ncapas.service.PersonService;
-import top.anyel.ncapas.service.uppercase.PersonUpperCaseService;
-import top.anyel.ncapas.shared.utils.exceptions.ApiError;
+import top.anyel.ncapas.service.uppercase.PersonUpperCase;
 import top.anyel.ncapas.shared.utils.exceptions.ApiErrorResponse;
-import top.anyel.ncapas.shared.utils.exceptions.Failure;
-import top.anyel.ncapas.shared.utils.exceptions.FieldViolation;
 import top.anyel.ncapas.shared.utils.logger.CustomLoggerFactoryService;
 import top.anyel.ncapas.shared.utils.logger.ICustomLoggerService;
 
+import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/persons/v1")
@@ -28,34 +24,32 @@ public class PersonController {
     @Autowired
     private PersonService personService;
 
+    @GetMapping("/")
+    public ResponseEntity<Void> index() {
+        try {
+            logger.logInfo("Redirigiendo a Swagger UI");
+            return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("/swagger-ui.html")).build();
+        } catch (Exception e) {
+            logger.logError("Error en el inicio de la aplicacion", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     @Autowired
     public PersonController(CustomLoggerFactoryService loggerFactoryService) {
         this.logger = loggerFactoryService.getLogger(PersonController.class);
     }
 
-    @GetMapping("/")
-    public String index(){
-        try {
-            /*
-            logger.logDebug("Bienvenido a la API de personas");
-            */
-            return "Bienvenido a la API de personas";
-        }
-        catch (Exception e){
-            logger.logError("Error en el inicio de la aplicacion", e);
-            return "Error en el inicio de la aplicacion";
-        }
-    }
+
 
     @PostMapping("/save")
     public ResponseEntity<?> save(@Valid @RequestBody Person person) {
         try{
             logger.logInfo("Guardando persona");
-            Person savedPerson = personService.save(PersonUpperCaseService.toUpperCasePerson(person));
+            Person savedPerson = personService.save(PersonUpperCase.toUpperCasePerson(person));
             return ResponseEntity.ok(savedPerson);
         }
         catch (Exception e){
-            logger.logError("Error al guardar persona", e);
             throw new RuntimeException("Error al guardar persona", e);
         }
     }
@@ -88,7 +82,7 @@ public class PersonController {
     @PutMapping("/updateById/{identification}")
     public ResponseEntity<?> updateById(@PathVariable String identification, @RequestBody Person person) {
         try {
-            Person updatedPerson = personService.updateById(identification, PersonUpperCaseService.toUpperCasePerson(person));
+            Person updatedPerson = personService.updateById(identification, PersonUpperCase.toUpperCasePerson(person));
             if (updatedPerson == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
@@ -110,17 +104,27 @@ public class PersonController {
         }
     }
 
+
+    /*opcion 1 */
     @GetMapping("/address/house/{identification}")
     public ResponseEntity<List<Address>> findHouseAddressesById(@PathVariable String identification) {
-        try {
-            List<Address> addresses = personService.findHouseAddressesById(identification);
-            return ResponseEntity.ok(addresses);
-        } catch (Exception e) {
-            logger.logError("Error al buscar direcciones de casa", e);
-            throw new RuntimeException("Error al buscar direcciones de casa", e);
+        List<Address> addresses = personService.findHouseAddressesById(identification);
+        if (addresses == null) {
+            return ResponseEntity.noContent().build();
         }
+        return ResponseEntity.ok(addresses);
     }
 
+    /*opcion 2
+    @GetMapping("/address/house/{identification}")
+    public ResponseEntity<List<Address>> findHouseAddressesById2(@PathVariable String identification) {
+       return ResponseEntity.ok(personService.findHouseAddressesById(identification));
+    }*/
+
+    @GetMapping("/findAllByEmailCity")
+    public List<Person> findAllByEmailCity(@RequestParam String email, @RequestParam String city) {
+        return personService.findAllByEmailCity(email, city);
+    }
 
 
 }

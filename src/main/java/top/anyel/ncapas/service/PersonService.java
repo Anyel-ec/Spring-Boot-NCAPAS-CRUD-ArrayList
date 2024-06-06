@@ -34,12 +34,12 @@ public class PersonService {
         return personRepository.deleteById(identification);
     }
 
-
     public List<Address> findHouseAddressesById(String identification) {
         return personRepository.findHouseAddressesById(identification);
     }
 
-
-
+    public List<Person> findAllByEmailCity(String email, String city) {
+        return personRepository.findAllByCity(email, city);
+    }
 
 }

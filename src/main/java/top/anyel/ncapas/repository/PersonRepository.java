@@ -34,6 +34,13 @@ public class PersonRepository {
         return null;
     }
 
+    public List<Person> findAllByEmailCity(String email, String city) {
+        return persons.stream()
+                .filter(person -> person.email().equals(email) && person.address().stream()
+                        .anyMatch(address -> address.city().equals(city)))
+                .collect(Collectors.toList());
+    }
+
     public Person updateById(String identification, Person person){
         for (int i = 0; i < persons.size(); i++) {
             if (persons.get(i).identification().equals(identification)) {
@@ -64,5 +71,16 @@ public class PersonRepository {
         }
         return Collections.emptyList();
 
+    }
+
+    public List<Person> findAllByCity(String email, String city) {
+        List<Person> exist_person = findAllByEmailCity(email, city);
+        if (exist_person != null) {
+            return persons.stream()
+                    .filter(person -> person.email().equals(email) && person.address().stream()
+                            .anyMatch(address -> address.city().equals(city)))
+                    .collect(Collectors.toList());
+        }
+        return Collections.emptyList();
     }
 }
