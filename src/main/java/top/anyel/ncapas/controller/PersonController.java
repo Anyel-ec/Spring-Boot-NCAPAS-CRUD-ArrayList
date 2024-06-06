@@ -9,7 +9,8 @@ import top.anyel.ncapas.model.Address;
 import top.anyel.ncapas.model.Person;
 import top.anyel.ncapas.service.PersonService;
 import top.anyel.ncapas.service.uppercase.PersonUpperCase;
-import top.anyel.ncapas.shared.utils.exceptions.ApiErrorResponse;
+import top.anyel.ncapas.service.validation.CedulaValidatorService;
+import top.anyel.ncapas.service.validation.PasswordValidatorService;
 import top.anyel.ncapas.shared.utils.logger.CustomLoggerFactoryService;
 import top.anyel.ncapas.shared.utils.logger.ICustomLoggerService;
 
@@ -21,8 +22,20 @@ import java.util.List;
 public class PersonController {
     private final ICustomLoggerService logger;
 
+    private final PersonService personService;
+
+    private final CedulaValidatorService cedulaValidatorService;
+
+    private final PasswordValidatorService passwordValidatorService;
+
     @Autowired
-    private PersonService personService;
+    public PersonController(CustomLoggerFactoryService loggerFactoryService, CedulaValidatorService cedulaValidatorService, PersonService personService, PasswordValidatorService passwordValidatorService) {
+        this.logger = loggerFactoryService.getLogger(PersonController.class);
+        this.cedulaValidatorService = cedulaValidatorService;
+        this.personService = personService;
+        this.passwordValidatorService = passwordValidatorService;
+    }
+
 
     @GetMapping("/")
     public ResponseEntity<Void> index() {
@@ -35,10 +48,7 @@ public class PersonController {
         }
     }
 
-    @Autowired
-    public PersonController(CustomLoggerFactoryService loggerFactoryService) {
-        this.logger = loggerFactoryService.getLogger(PersonController.class);
-    }
+
 
 
 
@@ -125,6 +135,20 @@ public class PersonController {
     public List<Person> findAllByEmailCity(@RequestParam String email, @RequestParam String city) {
         return personService.findAllByEmailCity(email, city);
     }
+
+
+    @GetMapping("/validate-cedula")
+    public String validateCedula(@RequestParam String cedula) {
+        boolean isValid = cedulaValidatorService.isValidCedula(cedula);
+        return isValid ? "Cédula válida" : "Cédula inválida";
+    }
+
+    @GetMapping("/validate-password")
+    public String validatePassword(@RequestParam String password) {
+        boolean isValid = passwordValidatorService.isValidPassword(password);
+        return isValid ? "Contraseña válida" : "Contraseña inválida";
+    }
+
 
 
 }

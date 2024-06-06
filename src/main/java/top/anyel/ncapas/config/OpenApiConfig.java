@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
                 title = "NCAPAS API",
                 version = "1.0",
                 description = "API para la gestión de personas en NCAPAS",
-                contact = @Contact(name = "Soporte NCAPAS", email = "soporte@ncapas.com"),
+                contact = @Contact(name = "Desarrollado por Anyel EC", email = "soporte@ncapas.com"),
                 license = @License(name = "Apache 2.0", url = "http://springdoc.org")
         ),
         servers = @Server(url = "http://localhost:8080")
